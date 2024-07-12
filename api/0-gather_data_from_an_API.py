@@ -22,38 +22,49 @@ def employee_info(employee_id: int, param: str = None):
     return employee_data
 
 
-def employee_todo(employee_id: int):
-    """Retrieves empyloyees todos
+def employee_todo(employee_id: int = None):
+    """Retrieves todos
 
     Args:
-        employee_id (int): employee id number
+        employee_id (int, optional): employee id number,
+            defaults to None
     """
+    # build url
     todo_url = BASE_URL + "todos/"
-    # Get the todo tasks for one employee
-    employee_todos = requests.get(
-        todo_url, params={'userId': employee_id}).json()
+    # employee id given retrieve employee's todo list
+    if employee_id:
+        # Get the todo tasks for one employee
+        employee_todos = requests.get(
+            todo_url, params={'userId': employee_id}).json()
 
-    # Counts the number of completed tasks / total tasks
-    completed_list = []
-    for task in employee_todos:
-        if task.get('completed'):
-            completed_list.append(task)
-    total_tasks = len(employee_todos)
-    tasks_completed = len(completed_list)
+        # Counts the number of completed tasks / total tasks
+        completed_list = []
+        for task in employee_todos:
+            if task.get('completed'):
+                completed_list.append(task)
+        total_tasks = len(employee_todos)
+        tasks_completed = len(completed_list)
 
-    employee_name = employee_info(employee_id, 'name')
+        employee_name = employee_info(employee_id, 'name')
 
-    print(
-        "Employee {} is done with tasks({}/{}):".format(
-            employee_name,
-            tasks_completed,
-            total_tasks)
-    )
-    for task in completed_list:
-        print("\t {}".format(task.get('title')))
+        print(
+            "Employee {} is done with tasks({}/{}):".format(
+                employee_name,
+                tasks_completed,
+                total_tasks)
+        )
+        # print completed tasks
+        for task in completed_list:
+            print("\t {}".format(task.get('title')))
 
-    # Return json of employee's todo list
+        # Return json of all the employee's todo list
+        return employee_todos
+    
+
+    # Get the todo tasks for all employees
+    employee_todos = requests.get(todo_url).json()
     return employee_todos
+        
 
 
 if __name__ == "__main__":
