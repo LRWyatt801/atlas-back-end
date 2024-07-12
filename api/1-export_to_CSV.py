@@ -8,12 +8,11 @@ import importlib
 API_getter = importlib.import_module('0-gather_data_from_an_API')
 
 
-
 def json_to_csv(employee_id: int = None):
     """writes todo list to a csv file
 
     Args:
-        employee_id (int, optional): employee id given if 
+        employee_id (int, optional): employee id given if
             one employee's todo list is desired.
             Defaults to None.
     """
