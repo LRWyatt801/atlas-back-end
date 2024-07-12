@@ -42,7 +42,7 @@ def employee_todo(employee_id: int):
     employee_name = employee_info(employee_id, 'name')
 
     print(
-        "Employee {} is done with tasks {}/{}:".format(
+        "Employee {} is done with tasks({}/{}):".format(
             employee_name,
             tasks_completed,
             total_tasks)
