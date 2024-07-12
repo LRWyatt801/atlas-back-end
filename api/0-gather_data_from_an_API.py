@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Returns information about employees todo list"""
+"""Retrieve information on employee and their todo list"""
 import requests
 from sys import argv
 
@@ -29,9 +29,11 @@ def employee_todo(employee_id: int):
         employee_id (int): employee id number
     """
     todo_url = BASE_URL + "todos/"
+    # Get the todo tasks for one employee
     employee_todos = requests.get(
         todo_url, params={'userId': employee_id}).json()
 
+    # Counts the number of completed tasks / total tasks
     completed_list = []
     for task in employee_todos:
         if task.get('completed'):
@@ -49,6 +51,9 @@ def employee_todo(employee_id: int):
     )
     for task in completed_list:
         print("\t {}".format(task.get('title')))
+
+    # Return json of employee's todo list
+    return employee_todos
 
 
 if __name__ == "__main__":
