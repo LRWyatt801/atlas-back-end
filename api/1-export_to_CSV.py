@@ -23,24 +23,19 @@ def json_to_csv(employee_id: int = None):
     # employee_id given
     if employee_id:
         csv_file_name = employee_id + ".csv"
-        username = API_getter.employee_info(employee_id, 'username')
-        # create and write file
-        with open(csv_file_name, mode='w', newline='') as file:
-            writer = csv.writer(file, quoting=csv.QUOTE_ALL)
-            for task in json_todo_list:
-                writer.writerow([employee_id, username,
-                                task['completed'], task['title']])
     # employee_id not given
     else:
         csv_file_name = "all_user.csv"
-        # create and write file
-        with open(csv_file_name, mode='w', newline='') as file:
-            writer = csv.writer(file, quoting=csv.QUOTE_ALL)
-            for task in json_todo_list:
-                employee_id = task.get('userId')
-                username = API_getter.employee_info(employee_id, 'username')
-                writer.writerow([employee_id, username,
-                                task['completed'], task['title']])
+        
+    # create and write file
+    with open(csv_file_name, mode='w', newline='') as file:
+        writer = csv.writer(file, quoting=csv.QUOTE_ALL)
+        for task in json_todo_list:
+            employee_id = task.get('userId')
+            username = API_getter.employee_info(employee_id, 'username')
+            writer.writerow([employee_id, username,
+                            task['completed'], task['title']])
+
 
 
 if __name__ == "__main__":
