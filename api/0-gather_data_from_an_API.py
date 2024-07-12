@@ -7,13 +7,16 @@ from sys import argv
 BASE_URL = "https://jsonplaceholder.typicode.com/"
 
 
-def employee_info(employee_id: int, param: str = None):
+def employee_info(employee_id: int = None, param: str = None):
     """Retrieves employee info
 
     Args:
         employee_id (int): employee id
     """
-    employee_url = BASE_URL + "users/{}".format(employee_id)
+    if employee_id:
+        employee_url = BASE_URL + "users/{}".format(employee_id)
+    else:
+        employee_url = BASE_URL + "users/"
     if param:
         employee_info = requests.get(employee_url).json()
         employee_data = employee_info.get(param)
