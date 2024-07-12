@@ -64,8 +64,14 @@ def employee_todo(employee_id: int = None):
     # Get the todo tasks for all employees
     employee_todos = requests.get(todo_url).json()
     return employee_todos
-        
 
 
 if __name__ == "__main__":
-    employee_todo(argv[1])
+    if len(argv) > 2:
+        print("USAGE: python3 0-gather_data_from_an_api.py"
+              + " <employee_id: optional>")
+    elif len(argv) == 1:
+        employee_todo()
+    else:
+        employee_id = argv[1]
+        employee_todo(employee_id)
