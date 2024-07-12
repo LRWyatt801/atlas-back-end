@@ -13,5 +13,5 @@ class SuppressPrints:
         sys.stdout = self._original_stdout
 
 # Usage:
-# with SuppressPrints:
+# with SuppressPrints():
 #     <script>
