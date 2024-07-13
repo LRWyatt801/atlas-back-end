@@ -21,23 +21,36 @@ def api_to_json_file(employee_id: int = None):
     if employee_id:
         for user in employee_info:
             user_tasks = {}
+            tasks = []
             user_id = employee_info.get('id')
             username = employee_info.get('username')
             with SuppressPrints():
-                tasks = API_getter.employee_todo(user_id)
-            for task in tasks:
-                task['username'] = username
+                tasks_data = API_getter.employee_todo(user_id)
+            for task in tasks_data:
+                task_info = {
+                    'task': task['title'],
+                    'completed': task['completed'],
+                    'username': username
+                }
+                tasks.append(task_info)
             user_tasks[user_id] = tasks
     else:
         user_tasks = {}
+        tasks = []
         for user in employee_info:
             for key in user:
                 user_id = user.get('id')
-                username = user.get('username')
+                # username = user.get('username')
             with SuppressPrints():
-                tasks = API_getter.employee_todo(user_id)
-            for task in tasks:
-                task['username'] = username
+                tasks_data = API_getter.employee_todo(user_id)
+            for task in tasks_data:
+                task_info = {
+                    'username': user['username'],
+                    'task': task['title'],
+                    'completed': task['completed']
+                }
+                tasks.append(task_info)
+
             user_tasks[user_id] = tasks
 
     # Create JSON file name
