@@ -36,13 +36,12 @@ def api_to_json_file(employee_id: int = None):
             user_tasks[user_id] = tasks
     else:
         user_tasks = {}
-        tasks = []
         for user in employee_info:
-            for key in user:
-                user_id = user.get('id')
-                username = user.get('username')
+            user_id = user.get('id')
+            username = user.get('username')
             with SuppressPrints():
                 tasks_data = API_getter.employee_todo(user_id)
+            tasks = []
             for task in tasks_data:
                 task_info = {
                     'username': username,
